@@ -7,6 +7,59 @@
         mc:Ignorable="d"
         Title="Server" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Button Content="Start" Height="30" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,95,0"/>
+            <Button Content="Stop" Height="30" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0"/>
+        </Grid>
+        <TabControl HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="261" Width="493">
+            <TabItem Header="Chat" Width="50">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0">Connected Users:</Label>
+                    <Label Grid.ColumnSpan="2" Margin="243,0,124.2,0.4">Received Messages:</Label>
+                    <TextBlock Text="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="0,4,11.2,0" Height="20" Width="113"/>
+                    <DataGrid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223"></DataGrid>
+                    <DataGrid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223"/>
+                    <Button Grid.Row="1" Grid.Column="0" Content="Drop" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>
+                    <Button Grid.Row="1" Grid.Column="1" Content="Save to log" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Log" Width="50">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="226*"/>
+                        <ColumnDefinition Width="244*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">Log Files:</Label>
+                    <Label Grid.Column="1" Grid.ColumnSpan="2" Margin="225.972,0,0.2,0.4">Log Messages:</Label>
+                    <DataGrid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" Grid.ColumnSpan="2"></DataGrid>
+                    <DataGrid Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="9.8,9.6,0,-0.2" Height="193" Width="224" Grid.RowSpan="2"/>
+                    <Button Grid.Row="1" Grid.Column="0" Content="Show" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,171.6,0,0" Grid.RowSpan="2" Height="30" Width="100" Grid.ColumnSpan="2"/>
+                    <Button Grid.Row="1" Grid.Column="1" Content="Drop" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Margin="0,171.6,10.2,0" Grid.RowSpan="2" Width="100"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
