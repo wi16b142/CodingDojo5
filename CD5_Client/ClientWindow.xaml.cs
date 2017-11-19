@@ -29,5 +29,10 @@ namespace CD5_Client
         {
 
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
