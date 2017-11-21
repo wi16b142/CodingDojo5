@@ -1,12 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace CD5_Server.Model
 {
     class ClientHandler
     {
+        private Action<string, Socket> action;
+        private byte[] buffer = new byte[512];
+        private Thread receiveMessageThread;
+        private const string endMsg = "@quit";
+
+        public string Name { get; private set; }
+
+        public Socket ClientSocket { get; private set; }
+
+        public ClientHandler(Socket socket, Action<string, Socket> action)
+        {
+            this.ClientSocket = socket;
+            this.action = action;
+            this.receiveMessageThread = new Thread(Receive);
+            this.receiveMessageThread.Start();
+        }
+
+        private void Receive()
+        {
+            string msg = "";
+            while(msg != endMsg)
+            {
+                int length = ClientSocket.Receive(buffer);
+                msg = Encoding.ASCII.GetString(buffer,0,length);
+                action(msg, ClientSocket);
+            }
+            Close();
+        }
+
+        public void Close()
+        {
+            Send(endMsg);
+            this.ClientSocket.Close(1);
+            receiveMessageThread.Abort();
+        }
+
+        public void Send(string msg)
+        {
+            ClientSocket.Send(Encoding.ASCII.GetBytes(msg));
+        }
     }
 }
