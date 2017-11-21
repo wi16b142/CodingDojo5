@@ -17,8 +17,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.ColumnSpan="2">
-            <Button Content="Start" Height="30" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,95,0"/>
-            <Button Content="Stop" Height="30" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0"/>
+            <Button Command="{Binding StartBtnClickCommand}" Content="Start" Height="30" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,95,0"/>
+            <Button Command="{Binding StopBtnClickCommand}" Content="Stop" Height="30" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0"/>
         </Grid>
         <TabControl HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="261" Width="493">
             <TabItem Header="Chat" Width="50">
@@ -34,11 +34,19 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0">Connected Users:</Label>
                     <Label Grid.ColumnSpan="2" Margin="243,0,124.2,0.4">Received Messages:</Label>
-                    <TextBlock Text="{Binding Msgs.Count, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="0,4,11.2,0" Height="20" Width="113"/>
-                    <DataGrid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" HeadersVisibility="None"></DataGrid>
-                    <DataGrid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" HeadersVisibility="None"/>
-                    <Button Grid.Row="1" Grid.Column="0" Content="Drop" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>
-                    <Button Grid.Row="1" Grid.Column="1" Content="Save to log" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>
+                    <TextBlock Text="{Binding MsgCounter}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="0,4,11.2,0" Height="20" Width="113"/>
+                    <DataGrid ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" HeadersVisibility="None" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Binding="{Binding Mode=OneWay}" ClipboardContentBinding="{x:Null}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid ItemsSource="{Binding Msgs}"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" HeadersVisibility="None" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Binding="{Binding Mode=OneWay}" ClipboardContentBinding="{x:Null}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Command="{Binding DropClientBtnClickCommand}" Grid.Row="1" Grid.Column="0" Content="Drop" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>
+                    <Button Command="{Binding SaveBtnClickCommand}" Grid.Row="1" Grid.Column="1" Content="Save to log" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Log" Width="50">

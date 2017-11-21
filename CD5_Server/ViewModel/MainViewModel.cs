@@ -32,30 +32,21 @@ namespace CD5_Server.ViewModel
             {
                 server = new Server(ip, port, GUIBroadcast); //instantiate server
                 server.StartAccepting(); //start listening
-                
-            }, () => 
-            {
-                return isConnected = true;
-            });
+                isConnected = true;
+            }, () => { return !isConnected; }); //can execute?
 
             StopBtnClickCommand = new RelayCommand(() => 
             {
                 server.StopAccepting(); //stop listening, close conn
-                
-            }, () => 
-            {
-                return isConnected = false;
-            });
+                isConnected = false;
+            }, () => { return isConnected; }); //can execute?
 
             DropClientBtnClickCommand = new RelayCommand(DropClientBtnClickMethod);
             SaveBtnClickCommand = new RelayCommand(SaveBtnClickMethod);
 
         }
 
-        public int MsgCounter()
-        {
-            return Msgs.Count;
-        }
+        public int MsgCounter { get { return Msgs.Count; } }
 
         private void GUIBroadcast(string newMsg)
         {

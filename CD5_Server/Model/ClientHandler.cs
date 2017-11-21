@@ -27,14 +27,17 @@ namespace CD5_Server.Model
         private void Receive()
         {
             string msg = "";
-            while(msg != endMsg)
+            while(!msg.Equals(endMsg))
             {
                 int length = ClientSocket.Receive(buffer);
-                msg = Encoding.ASCII.GetString(buffer,0,length);
+                msg = Encoding.UTF8.GetString(buffer,0,length);
 
                 if(Name == null && msg.Contains(":"))
                 {
                     Name = msg.Split(':')[0];
+                } else
+                {
+                    Name = "Anonymus";
                 }
 
                 action(msg, ClientSocket);
@@ -51,7 +54,7 @@ namespace CD5_Server.Model
 
         public void Send(string msg)
         {
-            ClientSocket.Send(Encoding.ASCII.GetBytes(msg));
+            ClientSocket.Send(Encoding.UTF8.GetBytes(msg));
         }
     }
 }

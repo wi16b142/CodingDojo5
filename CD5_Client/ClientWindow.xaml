@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CD5_Client"
         mc:Ignorable="d"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         Title="Client" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,7 +20,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Label Margin="15,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30">Messages:</Label>
-            <DataGrid Margin="15,40,15,10" SelectionChanged="DataGrid_SelectionChanged" HeadersVisibility="None" ></DataGrid>
+            <DataGrid Margin="15,40,15,10" SelectionChanged="DataGrid_SelectionChanged" HeadersVisibility="None" AutoGenerateColumns="False" ></DataGrid>
         </Grid>
         <Grid Grid.Row="2">
             <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="70" Margin="15,15,0,0">Message:</Label>
