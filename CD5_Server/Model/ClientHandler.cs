@@ -31,6 +31,12 @@ namespace CD5_Server.Model
             {
                 int length = ClientSocket.Receive(buffer);
                 msg = Encoding.ASCII.GetString(buffer,0,length);
+
+                if(Name == null && msg.Contains(":"))
+                {
+                    Name = msg.Split(':')[0];
+                }
+
                 action(msg, ClientSocket);
             }
             Close();

@@ -34,7 +34,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0">Connected Users:</Label>
                     <Label Grid.ColumnSpan="2" Margin="243,0,124.2,0.4">Received Messages:</Label>
-                    <TextBlock Text="0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="0,4,11.2,0" Height="20" Width="113"/>
+                    <TextBlock Text="{Binding Msgs.Count, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="0,4,11.2,0" Height="20" Width="113"/>
                     <DataGrid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" HeadersVisibility="None"></DataGrid>
                     <DataGrid Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" HeadersVisibility="None"/>
                     <Button Grid.Row="1" Grid.Column="0" Content="Drop" Margin="10,171.6,10.2,-0.2" Grid.RowSpan="2"/>

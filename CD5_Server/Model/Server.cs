@@ -11,11 +11,11 @@ namespace CD5_Server.Model
         Socket serverSocket;
         List<ClientHandler> clients = new List<ClientHandler>();
         Thread acceptingThread;
-        Action<string> GUIBroadcast;
+        Action<string> GUIUpdate;
 
         public Server(string ip, int port, Action<string> guiBroadcast)
         {
-            GUIBroadcast = guiBroadcast;
+            GUIUpdate = guiBroadcast;
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ip), port));
             serverSocket.Listen(5);
@@ -57,7 +57,7 @@ namespace CD5_Server.Model
 
         public void BroadCastMessage(string msg, Socket senderSocket)
         {
-            GUIBroadcast(msg);
+            GUIUpdate(msg);
 
             foreach(var client in clients)
             {
