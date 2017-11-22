@@ -27,7 +27,7 @@ namespace CD5_Server.Model
         private void Receive()
         {
             string msg = "";
-            while(!msg.Equals(endMsg))
+            while(!msg.Contains(endMsg))
             {
                 int length = ClientSocket.Receive(buffer);
                 msg = Encoding.UTF8.GetString(buffer,0,length);
@@ -54,7 +54,7 @@ namespace CD5_Server.Model
 
         public void Send(string msg)
         {
-            ClientSocket.Send(Encoding.UTF8.GetBytes(msg));
+            if (ClientSocket.Connected) ClientSocket.Send(Encoding.UTF8.GetBytes(msg));
         }
     }
 }

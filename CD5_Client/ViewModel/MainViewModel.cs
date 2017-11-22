@@ -17,6 +17,7 @@ namespace CD5_Client.ViewModel
         public string OutgoingMsg { get; set; }
         public RelayCommand ConnectBtnCLickCommand { get; set; }
         public RelayCommand SendBtnCLickCommand { get; set; }
+        public RelayCommand DisconnectBtnCLickCommand { get; set; }
         public ObservableCollection<string> History { get; set; }
 
         private Client client;
@@ -26,6 +27,7 @@ namespace CD5_Client.ViewModel
         {
             OutgoingUnamne = "";
             OutgoingMsg = "";
+            History = new ObservableCollection<string>();
             ConnectBtnCLickCommand = new RelayCommand(() =>
             {
                 client = new Client(ip, port, new Action<string>(IncomingMsgReceived), AfterDisconnect);
@@ -34,9 +36,15 @@ namespace CD5_Client.ViewModel
 
             SendBtnCLickCommand = new RelayCommand(() => 
             {
-                client.Send(OutgoingUnamne, OutgoingMsg);
+                client.Send(OutgoingUnamne+": "+OutgoingMsg);
                 History.Add("YOU: " + OutgoingMsg);
-            }, MsgNotEmpty);
+            }, () => { return (isConnected && OutgoingMsg.Length > 0); });
+
+            DisconnectBtnCLickCommand = new RelayCommand(() =>
+            {
+                client.Send(OutgoingUnamne+": @quit");
+                isConnected = false;
+            }, () => { return (isConnected); });
 
         }
 
@@ -54,13 +62,5 @@ namespace CD5_Client.ViewModel
             CommandManager.InvalidateRequerySuggested(); //force requery event to update button visibility
         }
 
-        private bool MsgNotEmpty()
-        {
-            if (isConnected && OutgoingMsg.Length > 0)
-            {
-                return true;
-            }
-            else return false;
-        }
     }
 }

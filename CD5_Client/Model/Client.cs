@@ -22,16 +22,16 @@ namespace CD5_Client.Model
         {
             try
             {
-                this.client = new TcpClient();
-                this.client.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
-                clientSocket = client.Client;
-                Incoming = IncomingNewMsg;
                 DisconnectAcknowledge = DisconnectRequest;
+                Incoming = IncomingNewMsg;
+                this.client = new TcpClient();
+                this.client.Connect(IPAddress.Parse(ip), port);
+                clientSocket = client.Client;
                 StartReceiving();
             }
             catch (Exception e)
             {
-                Incoming("Server not ready!");
+                IncomingNewMsg("Server not ready!");
                 DisconnectAcknowledge();
             }
 
@@ -45,7 +45,7 @@ namespace CD5_Client.Model
         private void Receive()
         {
             string message = "";
-            while (!message.Equals(endMsg))
+            while (!message.Contains(endMsg))
             {
                 int length = clientSocket.Receive(buffer);
                 message = Encoding.UTF8.GetString(buffer, 0, length);
@@ -54,9 +54,9 @@ namespace CD5_Client.Model
             Close();
         }
 
-        public void Send(string user, string msg)
+        public void Send(string msg)
         {
-            if(clientSocket != null) clientSocket.Send(Encoding.UTF8.GetBytes(user+": "+msg));
+            if(clientSocket != null) clientSocket.Send(Encoding.UTF8.GetBytes(msg));
         }
 
         public void Close()
