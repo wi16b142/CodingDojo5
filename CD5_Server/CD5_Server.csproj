@@ -113,5 +113,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CD5_FileHandler\CD5_FileHandler.csproj">
+      <Project>{FB01478A-A24A-44D9-84A4-71CE7113E832}</Project>
+      <Name>CD5_FileHandler</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

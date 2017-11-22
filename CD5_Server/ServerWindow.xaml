@@ -63,10 +63,18 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0.2,0.4">Log Files:</Label>
                     <Label Grid.Column="1" Grid.ColumnSpan="2" Margin="225.972,0,0.2,0.4">Log Messages:</Label>
-                    <DataGrid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" Grid.ColumnSpan="2" HeadersVisibility="None"></DataGrid>
-                    <DataGrid Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="9.8,9.6,0,-0.2" Height="193" Width="224" Grid.RowSpan="2" HeadersVisibility="None"/>
-                    <Button Grid.Row="1" Grid.Column="0" Content="Show" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,171.6,0,0" Grid.RowSpan="2" Height="30" Width="100" Grid.ColumnSpan="2"/>
-                    <Button Grid.Row="1" Grid.Column="1" Content="Drop" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Margin="0,171.6,10.2,0" Grid.RowSpan="2" Width="100"/>
+                    <DataGrid ItemsSource="{Binding LogFiles}" SelectedItem="{Binding SelectedLogfile}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,9.6,0,0" Height="152" Width="223" Grid.ColumnSpan="2" HeadersVisibility="None" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Binding="{Binding Mode=OneWay}" ClipboardContentBinding="{x:Null}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid ItemsSource="{Binding LogMsgs}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="9.8,9.6,0,-0.2" Height="193" Width="224" Grid.RowSpan="2" HeadersVisibility="None" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Binding="{Binding Mode=OneWay}" ClipboardContentBinding="{x:Null}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Command="{Binding ShowBtnClickCommand}" Grid.Row="1" Grid.Column="0" Content="Show" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,171.6,0,0" Grid.RowSpan="2" Height="30" Width="100" Grid.ColumnSpan="2"/>
+                    <Button Command="{Binding DropLogBtnClickCommand}" Grid.Row="1" Grid.Column="1" Content="Drop" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Margin="0,171.6,10.2,0" Grid.RowSpan="2" Width="100"/>
                 </Grid>
             </TabItem>
         </TabControl>
