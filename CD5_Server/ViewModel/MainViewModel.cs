@@ -3,7 +3,6 @@ using CD5_Server.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Collections.ObjectModel;
-
 using System.Linq;
 
 namespace CD5_Server.ViewModel
@@ -40,7 +39,6 @@ namespace CD5_Server.ViewModel
             Clients = new ObservableCollection<string>();
             Msgs = new ObservableCollection<string>();
             fileHandler = new FileHandler();
-            LogMsgs = new ObservableCollection<string>();
             
             StartBtnClickCommand = new RelayCommand(() => 
             {
@@ -58,7 +56,7 @@ namespace CD5_Server.ViewModel
             ShowBtnClickCommand = new RelayCommand(() =>
             {
                 LogMsgs = new ObservableCollection<string>(fileHandler.Read(SelectedLogfile));
-                RaisePropertyChanged("LogMessages");
+                RaisePropertyChanged("LogMsgs");
             }, () => { return SelectedLogfile != null; });
 
             DropLogBtnClickCommand = new RelayCommand(() =>
