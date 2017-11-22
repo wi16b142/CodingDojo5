@@ -1,34 +1,66 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using System.Collections.ObjectModel;
+using System;
+using CD5_Client.Model;
+using System.Windows.Input;
 
 namespace CD5_Client.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+
     public class MainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
+        private const int port = 10100;
+        private const string ip = "127.0.0.1";
+        public string OutgoingUnamne { get; set; }
+        
+        public string OutgoingMsg { get; set; }
+        public RelayCommand ConnectBtnCLickCommand { get; set; }
+        public RelayCommand SendBtnCLickCommand { get; set; }
+        public ObservableCollection<string> History { get; set; }
+
+        private Client client;
+        private bool isConnected = false;
+
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            OutgoingUnamne = "";
+            OutgoingMsg = "";
+            ConnectBtnCLickCommand = new RelayCommand(() =>
+            {
+                client = new Client(ip, port, new Action<string>(IncomingMsgReceived), AfterDisconnect);
+                isConnected = true;
+            }, () => { return !isConnected; });
+
+            SendBtnCLickCommand = new RelayCommand(() => 
+            {
+                client.Send(OutgoingUnamne, OutgoingMsg);
+                History.Add("YOU: " + OutgoingMsg);
+            }, MsgNotEmpty);
+
+        }
+
+        private void IncomingMsgReceived(string newMsg)
+        {
+            App.Current.Dispatcher.Invoke(() => 
+            {
+                History.Add(newMsg);
+            });
+        }
+
+        private void AfterDisconnect()
+        {
+            isConnected = false;
+            CommandManager.InvalidateRequerySuggested(); //force requery event to update button visibility
+        }
+
+        private bool MsgNotEmpty()
+        {
+            if (isConnected && OutgoingMsg.Length > 0)
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }
